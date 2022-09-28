@@ -1,15 +1,104 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
+
 <html lang="en">
-<head>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        
+       
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    </head>
+    <body>
     
-    <title>ANA-Voice Access Control</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
-    
-</head>
-<body>
-    <h1>ANA-Voice Access Control</h1>
-    <p>Bem vindo ao ANA-Voice Access Control</p>
-</body>
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self">
+                        <h1 class="text-white font-weight-bold">ANA-Voice Access Control</h1>
+                        <hr class="divider" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">O controle de acesso é um componente essencial da segurança do edifício. Você precisa de um realmente confiável!</p>
+                        <a class="btn btn-primary btn-xl" href="#about">Sobre o Sistema</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- About-->
+        <section class="page-section bg-primary" id="about">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200" style="margin: 0 auto; text-align: center;"> 
+                        <h2 class="text-white mt-0">Nos temos oque precisa!</h2>
+                        <img src="/static/img/voice_biometrics_voiceprint.jpg" alt="" width="300" height="150" class="center">
+
+                    </div>
+                    <div class="row">
+                       
+                        <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
+                            <hr class="divider divider-light" />
+                          
+                            <p class="text-white-75 mb-4">Nenhuma voz no mundo é igual a outra: formato, tamanho das cordas vocais, 
+                                músculo em volta da região e o modo como a pessoa usa a garganta para projetar a voz, até o modo como aprende a falar,
+                                 são algumas das variáveis que definem a voz de uma pessoa. Por isso, a voz humana é única,
+                                 considerando ainda genética e fatores de vivência. sendo assim é mais segura para se autenticar!</p>
+                           
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
+                           
+                            <hr class="divider divider-light" />
+                            <p class="text-white-75 mb-4"><strong>Biometria de voz</strong> é mais seguro que senha: de acordo com a Minds Digital,
+                                 esse método de autenticação é melhor, pois não há como fraudadores conseguirem informações da vítima,
+                                  através da engenharia social, para aplicar golpes com esse tipo de segurança.!</p>
+                           
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
+                            
+                            
+                            <hr class="divider divider-light" />
+                            <p class="text-white-75 mb-4">O nosso sistema é o resultado da aplicação de algoritmos de Inteligência Artificial (IA) 
+                                e aprendizado de máquina (ML) para a criação de uma impressão digital única que identifica de forma única cada ser humano,
+                                 da mesma forma que uma impressão digital. Com confiabilidade superior a 97% e até 99% misturado com outro método de segurança!</p>
+                           
+                        </div>
+                       
+                        
+                    </div>
+                    
+                </div>
+                <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200" style="margin: 0 auto; text-align: center;"> 
+                    <a class="btn btn-light btn-xl" href="#">Contacte-nos!</a>    
+                </div>
+            </div>
+        </section>
+        
+
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2022 - Company Name</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/static/js/scripts.js"></script>
+       
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
 </html>
+
+{% endblock %}

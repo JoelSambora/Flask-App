@@ -1,7 +1,6 @@
 import os
 from flask import Flask, render_template
 
-
 app = Flask(__name__)
 
 #index /  pagina inicial
@@ -14,6 +13,10 @@ def index():
 def about():
     return render_template("about.html")
 
+#login
+@app.route('/login')
+def login():
+    return render_template("login.html")
 
 #colaboradores
 @app.route('/users/<nome_user>')

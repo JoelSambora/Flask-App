@@ -1,12 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Sobre a ANA Access Control</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+    <html lang="en">
+    <head>
+        <title>Sobre a ANA Access Control</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
+    </head>
+    <body>
+        <!-- About-->
+        <section class="page-section bg-primary" id="about">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200" style="margin: 0 auto; text-align: center;"> 
+                        <h2 class="text-white mt-0">Nos temos oque precisa!</h2>
+                        <img src="/static/img/voice_biometrics_voiceprint.jpg" alt="" width="300" height="150" class="center">
+
+                    </div>
+                    <div class="row">
+                       
+                        <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
+                            <hr class="divider divider-light" />
+                          
+                            <p class="text-white-75 mb-4">Nenhuma voz no mundo é igual a outra: formato, tamanho das cordas vocais, 
+                                músculo em volta da região e o modo como a pessoa usa a garganta para projetar a voz, até o modo como aprende a falar,
+                                 são algumas das variáveis que definem a voz de uma pessoa. Por isso, a voz humana é única,
+                                 considerando ainda genética e fatores de vivência. sendo assim é mais segura para se autenticar!</p>
+                           
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
+                           
+                            <hr class="divider divider-light" />
+                            <p class="text-white-75 mb-4"><strong>Biometria de voz</strong> é mais seguro que senha: de acordo com a Minds Digital,
+                                 esse método de autenticação é melhor, pois não há como fraudadores conseguirem informações da vítima,
+                                  através da engenharia social, para aplicar golpes com esse tipo de segurança.!</p>
+                           
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
+                            
+                            
+                            <hr class="divider divider-light" />
+                            <p class="text-white-75 mb-4">O nosso sistema é o resultado da aplicação de algoritmos de Inteligência Artificial (IA) 
+                                e aprendizado de máquina (ML) para a criação de uma impressão digital única que identifica de forma única cada ser humano,
+                                 da mesma forma que uma impressão digital. Com confiabilidade superior a 97% e até 99% misturado com outro método de segurança!</p>
+                           
+                        </div>
+                       
+                        
+                    </div>
+                    
+                </div>
+                <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200" style="margin: 0 auto; text-align: center;"> 
+                    <a class="btn btn-light btn-xl" href="#">Contacte-nos!</a>    
+                </div>
+            </div>
+        </section>
+    </body>
+    </html>
+{% endblock %}

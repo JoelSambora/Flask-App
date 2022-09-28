@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <html lang="en">
+    <head>
+        <title>Login {{nome_user}}</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    </head>
+    <body>
+        <section>
+            <div class="login-div flex-column-centered">
+                <div class="login-comps">
+                <h1 class="text-center">Login</h1>
+                <form method="post" class="flex-column-centered">
+                    <input type="text" name="user" id="user" placeholder="Username" required>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <input type="submit" value="Login">
+                </form>
+                <a href="#">
+                    <p class="text-center">Forgot Password?</p>
+                </a>
+                </div>
+            </div>
+            </div>
+        </section>
+    </body>
+    </html>
+
+{% endblock %}
