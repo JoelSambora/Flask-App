@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template
+import speech_recognition as sr
 
 app = Flask(__name__)
 
