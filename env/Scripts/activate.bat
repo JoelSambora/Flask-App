@@ -1,4 +1,4 @@
-@set "VIRTUAL_ENV=D:\JOEL\Monografia\Parte-Pratica\Flask App\env"
+@set "VIRTUAL_ENV=D:\JOEL\Monografia\Parte-Pratica\Flask App\.env"
 
 @if defined _OLD_VIRTUAL_PROMPT (
     @set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
