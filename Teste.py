@@ -1,46 +1,40 @@
-import speech_recognition as sr
-import pyaudio
-#om Recognizer classe na biblioteca SpeechRecognition. 
-# O objetivo principal de um Recognizer classe é, naturalmente, reconhecer a fala.
-# Criando um Recognizer instância é fácil
-#
-recognizer = sr.Recognizer()
+from google.cloud import speech_v1p1beta1 as speech
 
-#O uso do limite de energia melhorará o reconhecimento de fala ao trabalhar com dados de áudio. 
-# Se os valores forem superioresao limiar de energia = 300, são considerados como fala,
-# mas se os valores forem inferiores, são considerados silenciosos.
-recognizer.energy_threshold = 300
+client = speech.SpeechClient()
 
-#obter áudio do microfone
-def takecommand():
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Listening....")
-        r.pause_threshold = 1
-        audio = r.listen(source)
-    try:
-     print("Recognizing....")
-     query = r.recognize_google(audio, language='pt')
-     print(f"user said: {query}\n")
-     
-     #gravar áudio dito em um arquivo WAV
-     with open("microphone-results.wav", "wb") as f:
-      f.write(audio.get_wav_data())
+speech_file = "resources/commercial_mono.wav"
 
-    except Exception as e:
-      print(e)
-      return "None"
-    return query
-  
-takecommand() 
+with open(speech_file, "rb") as audio_file:
+    content = audio_file.read()
 
+audio = speech.RecognitionAudio(content=content)
 
-#Código de processamento de áudio
-audio_file = sr.AudioFile("microphone-results.wav")
-type(audio_file)
+diarization_config = speech.SpeakerDiarizationConfig(
+  enable_speaker_diarization=True,
+  min_speaker_count=2,
+  max_speaker_count=10,
+)
 
-#Então, vamos convertê-lo em áudio para dados de áudio com a ajuda de um registro.
-with audio_file as source:
-   audio_file = recognizer.record(source,duration = 5.0)
-   result = recognizer.recognize_google(audio_data = audio_file)
-print(result)
+config = speech.RecognitionConfig(
+    encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+    sample_rate_hertz=8000,
+    language_code="en-US",
+    diarization_config=diarization_config,
+)
+
+print("Waiting for operation to complete...")
+response = client.recognize(config=config, audio=audio)
+
+# The transcript within each result is separate and sequential per result.
+# However, the words list within an alternative includes all the words
+# from all the results thus far. Thus, to get all the words with speaker
+# tags, you only have to take the words list from the last result:
+result = response.results[-1]
+
+words_info = result.alternatives[0].words
+
+# Printing out the output:
+for word_info in words_info:
+    print(
+        u"word: '{}', speaker_tag: {}".format(word_info.word, word_info.speaker_tag)
+    )

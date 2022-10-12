@@ -6,17 +6,17 @@ app = Flask(__name__)
 #index /  pagina inicial
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("includes/index.html")
 
 #função about/ sobre nos
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    return render_template("includes/about.html")
 
 #login
 @app.route('/login')
 def login():
-    return render_template("login.html")
+    return render_template("accounts/login.html")
 
 #colaboradores
 @app.route('/users/<nome_user>')
