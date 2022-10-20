@@ -13,28 +13,19 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav" style="margin-left: auto;">
-          <li class="nav-item">
+        <ul class="navbar-nav" style="margin-left: auto; navbar">
+          <li class="nav-item navbar">
+            <i class="fas fa-home" style="color: white"></i>
             <a class="nav-link active" aria-current="page" href="/">Pagina Inicial</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link"  href="{{ url_for('about') }}">Sobre</a>
+         <!-- <li class="nav-item navbar ">
+            <i class="far fa-file-alt" style="color: white"></i>
+            <a class="nav-link active"  aria-current="page" href="{{ url_for('about') }}">Sobre</a>
           </li>
-          <!--
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-        -->
-        <li class="nav-item">
-          <a class="nav-link"  href="{{ url_for('login') }}">Login</a>
+       -->
+        <li class="nav-item navbar">
+          <i class="fas fa-user " style="color: white; margin-left: 1rem"></i>
+          <a class="nav-link active" aria-current="page" href="{{ url_for('login') }}">Entrar</a>
         </li>
           
         </ul><!--

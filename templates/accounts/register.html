@@ -1,0 +1,44 @@
+{% extends 'layouts/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+    <html lang = "en">
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    </head>
+    
+    <body>
+        <div class="container">
+
+            <form class="form-signin">
+                <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                    <h2 id="heading">Cadastre Sua Conta de Usuário</h2>
+                    <p>Preencha todos os campos do formulário</p>
+                </div>
+                <div class="formulario">
+                    <div class="col-md-5 border-right" style="margin-left: 2rem; padding-top: 2rem;  padding-bottom: 2rem; " >
+                        {{ form.hidden_tag() }}
+                        
+                        {{ wtf.form_field(form.nome) }}
+
+                        {{ wtf.form_field(form.email) }}
+
+                        {{ wtf.form_field(form.password) }}
+                        
+                        <div class="botao">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"> Registrar </buttom>
+
+                        </div>
+
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+        <style>
+            .form-group{
+                margin: 1rem 0px;
+            } 
+        </style>
+    </body>
+{% endblock %}

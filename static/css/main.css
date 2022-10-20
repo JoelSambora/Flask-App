@@ -11671,3 +11671,39 @@ input {
 .supported {
   display: block;
 }
+#men_error{
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+}
+.nav{
+  margin-right: 2rem;
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+}
+.card {
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+  border-radius: 4px;
+  background-color: #A0C0D6;
+}
+.formulario{
+  display: flex;
+  background-color: white;
+  border-radius: 5px;
+}
+.botao{
+  
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+}
+body{
+  background-color: #eaedf2;
+}

@@ -101,3 +101,4 @@ recognition.onerror = function(event) {
   console.log('Error occurred in recognition: ' + event.error);
   button.innerHTML = "Click to speak";
 }
+
