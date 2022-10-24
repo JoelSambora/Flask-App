@@ -4,7 +4,7 @@
     <html lang = "en">
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     
     <body>
@@ -15,8 +15,8 @@
                     <h2 id="heading">Cadastre Sua Conta de Usuário</h2>
                     <p>Preencha todos os campos do formulário</p>
                 </div>
-                <div class="formulario">
-                    <div class="col-md-5 border-right" style="margin-left: 2rem; padding-top: 2rem;  padding-bottom: 2rem; " >
+                <div class="formulario col-md-12">
+                    <div class="col-md-4 border-right" style="margin-left: 2rem; padding-top: 1rem;  padding-bottom: 1rem; " >
                         {{ form.hidden_tag() }}
                         
                         {{ wtf.form_field(form.nome) }}
@@ -24,6 +24,25 @@
                         {{ wtf.form_field(form.email) }}
 
                         {{ wtf.form_field(form.password) }}
+
+                        {{ wtf.form_field(form.provincia) }}
+                        
+                
+
+                    </div>
+
+                    <div class="col-md-4 border-right" style="margin-left: 2rem; padding-top: 1rem;  padding-bottom: 1rem;   margin-right: 2rem;" >
+                        {{ form.hidden_tag() }}
+                        
+                        {{ wtf.form_field(form.avenida) }}
+
+                        {{ wtf.form_field(form.bairro) }}
+
+                        {{ wtf.form_field(form.casaNumero) }}
+
+                        {{ wtf.form_field(form.telefone) }}
+                        
+                        <input type="file" class="form-control" name="file" placeholder="select a file to upload" required multiple>
                         
                         <div class="botao">
                             <button class="btn btn-lg btn-primary btn-block" type="submit"> Registrar </buttom>
@@ -31,6 +50,7 @@
                         </div>
 
                     </div>
+                   
                     
                 </div>
             </form>
@@ -41,4 +61,5 @@
             } 
         </style>
     </body>
+    
 {% endblock %}

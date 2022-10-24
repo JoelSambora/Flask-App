@@ -11696,14 +11696,25 @@ input {
   display: flex;
   background-color: white;
   border-radius: 5px;
+  justify-content: center;
+  opacity: 0.8;
+ 
 }
 .botao{
-  
+  padding-top: 1rem;
   display: flex;
   align-content: center;
-  justify-content: center;
+  justify-content: flex-end;
 
 }
+.nav-item{
+  justify-content: flex-end;
+}
+.nav-item:hover{
+  color: #228B22;
+}
 body{
-  background-color: #eaedf2;
+  background-image: url('/static/img/register.png');
+  background-repeat: no-repeat;
+  height: 100%;
 }
