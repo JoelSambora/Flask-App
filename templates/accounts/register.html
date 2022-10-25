@@ -1,6 +1,41 @@
 {% extends 'layouts/base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert {{ category }}">
+        {% if category=="success" %}
+            <div class="alert alert-success d-flex align-items-center" role="alert" style="display:none">
+                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                <div>
+                    {{ message|capitalize }}
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-warning d-flex align-items-center" role="alert" style="display:none">
+                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                <div>
+                    {{ message|capitalize }}
+                </div>
+            </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<!--{% for message in get_flashed_messages() %}
+
+    <div class="alert alert-success d-flex align-items-center fade show"  role="alert">
+        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        <div>
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+{% endfor %}-->
     <html lang = "en">
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -8,15 +43,19 @@
     </head>
     
     <body>
-        <div class="container">
+        <section>
 
-            <form class="form-signin">
+            <form class="form-sigin" method="POST" action="/register">
+
+                {{ form.csrf_token }}
+
                 <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
                     <h2 id="heading">Cadastre Sua Conta de Usuário</h2>
                     <p>Preencha todos os campos do formulário</p>
                 </div>
                 <div class="formulario col-md-12">
                     <div class="col-md-4 border-right" style="margin-left: 2rem; padding-top: 1rem;  padding-bottom: 1rem; " >
+                    
                         {{ form.hidden_tag() }}
                         
                         {{ wtf.form_field(form.nome) }}
@@ -27,11 +66,11 @@
 
                         {{ wtf.form_field(form.provincia) }}
                         
-                
 
                     </div>
 
                     <div class="col-md-4 border-right" style="margin-left: 2rem; padding-top: 1rem;  padding-bottom: 1rem;   margin-right: 2rem;" >
+                        
                         {{ form.hidden_tag() }}
                         
                         {{ wtf.form_field(form.avenida) }}
@@ -42,23 +81,25 @@
 
                         {{ wtf.form_field(form.telefone) }}
                         
-                        <input type="file" class="form-control" name="file" placeholder="select a file to upload" required multiple>
-                        
+                        <div class="ui-widget">
+                            <label for="tags">Escolher o audio(.wav)</label>
+                            <input type="file" class="form-control" name="file" placeholder="Selecione o audio .wav" required>
+                        </div>
                         <div class="botao">
                             <button class="btn btn-lg btn-primary btn-block" type="submit"> Registrar </buttom>
 
                         </div>
 
-                    </div>
-                   
+                    </div>  
                     
                 </div>
             </form>
-        </div>
+        </section>
         <style>
             .form-group{
                 margin: 1rem 0px;
-            } 
+            }
+            
         </style>
     </body>
     

@@ -1,6 +1,6 @@
 from email import message
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, flash,redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField,SelectField, TelField
@@ -18,7 +18,7 @@ class RegisterForm(FlaskForm):
     bairro = StringField('bairro', validators=[InputRequired(), Length(min=4, max=24)], render_kw={"placeholder": "bairro"})
     telefone = TelField('Número de telefone', [InputRequired(), Length(min=9, max=9)], render_kw={"placeholder": "840000000"})
     casaNumero = TelField('Número da casa', [InputRequired(), Length(min=1, max=9)])
-    password = PasswordField('Senha', validators=[InputRequired(), Length(min=8, max=15), ], render_kw={"placeholder": "Senha do colaborador"})
+    password = PasswordField('Senha', validators=[Length(min=8, max=15), ], render_kw={"placeholder": "Senha do colaborador"})
 
 class LoginForm(FlaskForm):
     email = StringField('',validators=[InputRequired(), Email(message='Email invalido'), Length(max=50)], render_kw={"placeholder": "Seu email"})
@@ -48,18 +48,18 @@ def user(nome_user):
 @app.route('/register', methods=['GET','POST'])
 def create():
     form = RegisterForm()
+    if form.validate_on_submit():
+       flash('Usuário criado com sucesso', 'success')
     
+    if not form.validate_on_submit():
+        flash('Usuário não registrado', 'error')
+        
+        #return '<h1>' + form.nome.data +' '+ form.email.data +'</h1>'
+    # if request.method == 'POST':
+    #     for file in request.files.getlist('file'):
+    #         file.save(os.path.join(app.config['UPLOAD_DIR'], file.filename))
     return render_template("accounts/register.html", form = form)
 
-
-app.config["UPLOAD_DIR"] = "uploads"
-@app.route("/upload", methods = ["GET", "POST"])
-def upload():
-    if request.method == 'POST':
-        for file in request.files.getlist('file'):
-             file.save(os.path.join(app.config['UPLOAD_DIR'], file.filename))
-        return render_template("accounts/register.html", msg = "File uplaoded successfully.")
-    return render_template("accounts/register", msg = "")
 # função que retorna erro para página que não existe
 @app.route('/<string:nome>')
 def error(nome):

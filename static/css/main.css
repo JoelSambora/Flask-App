@@ -11434,8 +11434,8 @@ header.masthead h1, header.masthead .h1 {
   align-items: center;
 }
 .login-div {
+  background:  linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("/static/img/register.png");
   min-height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("https://unsplash.com/photos/jbywvpa9vH8/download?force=true&w=1920");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -11697,7 +11697,7 @@ input {
   background-color: white;
   border-radius: 5px;
   justify-content: center;
-  opacity: 0.8;
+  opacity: 0.7;
  
 }
 .botao{
@@ -11713,8 +11713,22 @@ input {
 .nav-item:hover{
   color: #228B22;
 }
+.form-sigin{
+  background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("/static/img/register.png");
+  background-repeat: no-repeat;
+  height: 100%;
+}
+.toplogin{
+  font-weight: bold;
+}
+/* .alert.success {
+  background-color: green;
+}
+
+.alert.error {
+  background-color: red;
+} */
 body{
-  background-image: url('/static/img/register.png');
   background-repeat: no-repeat;
   height: 100%;
 }
