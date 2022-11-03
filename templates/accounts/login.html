@@ -1,17 +1,32 @@
-{% extends 'layouts/base.html' %}
+
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+            <span>{{ message }}</section>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <span aria-hidden = "true"></span>
+        </div>
+   
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
     <html lang="en">
     <head>
         <title>Login</title>
         <meta charset="UTF-8">
+        <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     </head>
     <body>
         <section>
+            <form class="form-login" method="POST" action="/login">
             <div class="login-div flex-column-centered">
                 <input id="input" class="input" type="checkbox" />
                 
@@ -42,7 +57,7 @@
                                     <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
                                 </svg>
                                 </div>
-                                {{ wtf.form_field(form.email) }}
+                                <input id="email" class="form-control" name="email" type="text" placeholder="anavoice@gmail.com" class="textbox"/>
 
                             </label>
                 
@@ -52,7 +67,7 @@
                                     <path d="M12 2C9.243 2 7 4.243 7 7v2H6c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v2H9V7zm9.002 13H13v-2.278c.595-.347 1-.985 1-1.722 0-1.103-.897-2-2-2s-2 .897-2 2c0 .736.405 1.375 1 1.722V20H6v-9h12l.002 9z"></path>
                                 </svg>
                                 </div>
-                                {{ wtf.form_field(form.password) }}
+                                <input type="password" class="form-control" placeholder="Introduza a senha" id="senha" name="senha"  required>
                             </label>
                         </div>
                 
@@ -60,9 +75,9 @@
                             <button type="submit" class="button-submit" id="goo" >Entrar</button>
                         </div>
 
-                        <div class="submit" style="padding-bottom: 10px">
-                            <a class="btn btn-outline-warning" href = "/register"> 
-                             Registar 
+                        <div class="submit" style="padding-bottom: 10px; margin-right: 250px">
+                            <p> Sem conta? <a  style="color: #6495ED " href = "/register"> 
+                             Registar-se 
                             </a>
                         </div>
                     </div>
@@ -89,15 +104,16 @@
                             <button type="submit" id="start" class="button-submit">Clique para falar</button>
                         </div>
 
-                        <div class="submit" style="padding-bottom: 10px">
-                            <a class="btn btn-outline-warning" href = "/register"> 
-                             Registar 
+                        <div class="submit" style="padding-bottom: 10px; margin-right: 250px">
+                            <p> Sem conta? <a  style="color: #6495ED " href = "/register"> 
+                             Registar-se 
                             </a>
                         </div>
                     </div>
 
                 </div>
             </div>
+        </form>
         </section>
         <script src="/static/js/scripts.js"></script>
     </body>

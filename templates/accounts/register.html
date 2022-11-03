@@ -5,25 +5,22 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
-        {% if category=="success" %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            
-            {% else %}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endif %}
+        <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+            <span>{{ message }}</section>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <span aria-hidden = "true"></span>
+        </div>
+   
       </div>
     {% endfor %}
   {% endif %}
 {% endwith %}
 
+
     <html lang = "en">
     <head>
+        <title>Register</title>
+
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -33,7 +30,7 @@
 
             <form class="form-sigin" method="POST" action="/register">
 
-                {{ form.csrf_token }}
+               
 
                 <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
                     <h2 id="heading">Cadastre Sua Conta de Usuário</h2>
@@ -42,35 +39,84 @@
                 <div class="formulario col-md-12">
                     <div class="col-md-4 border-right" style="margin-left: 2rem; padding-top: 1rem;  padding-bottom: 1rem; " >
                     
-                        {{ form.hidden_tag() }}
-                        
-                        {{ wtf.form_field(form.nome) }}
 
-                        {{ wtf.form_field(form.email) }}
+                        <div class="col-md-12">
+                            <label>Nome</label>
+                            <input id="nome" class="form-control" name="nome" type="text" placeholder="Nome completo" class="textbox"/>
+                        </div>
+                        </br>
 
-                        {{ wtf.form_field(form.password) }}
+                        <div class="col-md-12">
+                            <label for="gander">Selecione o genero</label>
+                            <select class="form-control" name="genero" id="genero">
+                                <option value="masculino">Masculino</option>
+                                <option value="femenino">Femenino</option>                            
+                            </select>
+                        </div>
+                        </br>
 
-                        {{ wtf.form_field(form.provincia) }}
+                        <div class="col-md-12">
+                            <label>Email @</label>
+                            <input id="email" class="form-control" name="email" type="text" placeholder="anavoice@gmail.com" class="textbox"/>
+
+                        </div>
+                        </br>
+
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Senha</label> <input type="password" class="form-control" placeholder="Introduza a senha" id="senha" name="senha"  required></div>
+                            <div class="col-md-6"><label class="labels">Confirmar Senha</label><input type="password" name="confirmarsenha" class="form-control" placeholder="Confirme a senha" required></div>
+                        </div>
+                        </br>
+
+                        <div class="col-md-12">
+                            <label for="gander">Selecione a província</label>
+                            <select class="form-control" name="provincia" id="provincia">
+                                <option value="masculino">Maputo Cidade</option>
+                                <option value="femenino">Mapauto Província</option>                            
+                            </select>
+                        </div>
                         
 
                     </div>
 
                     <div class="col-md-4 border-right" style="margin-left: 2rem; padding-top: 1rem;  padding-bottom: 1rem;   margin-right: 2rem;" >
                         
-                        {{ form.hidden_tag() }}
                         
-                        {{ wtf.form_field(form.avenida) }}
+                        <div class="col-md-12">
+                            <label>Avenida</label>
+                            <input id="avenida" class="form-control" name="avenida" type="text" placeholder="Av. Mapauto" class="textbox" required/>
+                        </div>
+                        </br>
 
-                        {{ wtf.form_field(form.bairro) }}
+                        <div class="col-md-12">
+                            <label>Bairro</label>
+                            <input id="bairro" class="form-control" name="bairro" type="text" placeholder="Luis Cabral" class="textbox"/>
+                        </div>
+                        </br>
+                        <div class="col-md-12">
+                            <label>Numero da residencia</label>
+                            <input  class='form-control phone'  name='phone1' maxlength="5" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" required> 
+                        </div>
+                        </br>
 
-                        {{ wtf.form_field(form.casaNumero) }}
+                        <div class='col-md-12'> 
+                            <label class='labels'>Numero de telefone</label> 
+                            <div class='input-group mb-3'>
+                                <div class='input-group-prepend'> 
+                                  <span class='input-group-text' id='basic-addon3'>+258</span> 
+                                </div> 
+                                <input  class='form-control phone'  name='phone1' maxlength="9" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" required> 
+                                
+                            </div> 
+                        </div>
+                        </br>
 
-                        {{ wtf.form_field(form.telefone) }}
-                        
-                        <div class="ui-widget">
+                        <div class="col-md-12">
                             <label for="tags">Escolher o audio(.wav)</label>
                             <input type="file" class="form-control" name="file" placeholder="Selecione o audio .wav" required>
                         </div>
+                        </br>
+
                         <div class="botao">
                             <button class="btn btn-lg btn-primary btn-block" type="submit"> Registrar </buttom>
 

@@ -11721,6 +11721,9 @@ input {
 .toplogin{
   font-weight: bold;
 }
+.help-block{
+  color: red;
+}
 /* .alert.success {
   background-color: green;
 }
