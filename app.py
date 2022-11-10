@@ -229,7 +229,7 @@ def edit(id):
     redirect(url_for('users'))
 
 #update colaborador
-@app.route('/update', methods = ['GET','POST'])
+@app.route('/update/<int:id>', methods = ['GET','POST'])
 def update(id):
     if 'loggedin' in session:
         cursor = connection.cursor(buffered=True)
@@ -315,7 +315,7 @@ def update(id):
     return redirect(url_for('login'))
 
 #delete colaborador
-@app.route('/delete')
+@app.route('/delete/<int:id>')
 def delete(id):
     if 'loggedin' in session:
         
