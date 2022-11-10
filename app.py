@@ -209,16 +209,15 @@ def register():
         return redirect(url_for('login'))
                
     return render_template("accounts/register.html")
+
 #edit colaborador
 @app.route('/edit/<int:id>')
 def edit(id):
     if 'loggedin' in session:
         cursor = connection.cursor(buffered=True)
         cursor.execute('SELECT * FROM colaboradores INNER JOIN users ON users.Id = colaboradores.Users_id INNER JOIN telefone ON Colaboradores_ID = colaboradores.id INNER JOIN endereco ON endereco.Colaboradores_ID = colaboradores.id Where colaboradores.id = %s', (id,))
-
         #cursor.execute('SELECT * FROM colaboradores Where colaboradores.id = %s', (id,))
         account =  cursor.fetchone()              
-        print(account)
 
         if account:
             return render_template("accounts/edit.html", record=account)
@@ -314,6 +313,26 @@ def update(id):
 
     print(account)
     return redirect(url_for('login'))
+
+#delete colaborador
+@app.route('/delete')
+def delete(id):
+    if 'loggedin' in session:
+        
+        cursor = connection.cursor(buffered=True)
+        cursor.execute('SELECT * FROM colaboradores Where colaboradores.id = %s', (id,))
+        account =  cursor.fetchone()
+        
+        if account:
+            
+            cursor.execute('DELETE * FROM colaboradores INNER JOIN users ON users.Id = colaboradores.Users_id INNER JOIN telefone ON Colaboradores_ID = colaboradores.id INNER JOIN endereco ON endereco.Colaboradores_ID = colaboradores.id Where colaboradores.id = %s', (id,))
+        else:
+            flash('Não existe uma conta com esse identificador', 'danger')
+            return redirect(url_for('users'))
+        
+    else:
+        flash('Não esta logado', 'danger')
+        return redirect(url_for('users')) 
 
 # função que retorna erro para página que não existe
 @app.route('/<string:nome>')
