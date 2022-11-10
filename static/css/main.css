@@ -626,9 +626,10 @@ progress {
   font-size: 0.875em;
   color: #6c757d;
 }
-
+.container-fluid{
+  margin-left: 9rem !important;
+}
 .container,
-.container-fluid,
 .container-xxl,
 .container-xl,
 .container-lg,
@@ -4079,6 +4080,7 @@ textarea.form-control-lg {
 }
 
 .navbar-collapse {
+  margin-right: 9rem;
   flex-basis: 100%;
   flex-grow: 1;
   align-items: center;
@@ -11692,6 +11694,9 @@ input {
   border-radius: 4px;
   background-color: #A0C0D6;
 }
+/* input:invalid {
+  box-shadow: 0 0 5px 1px red;
+} */
 .formulario{
   display: flex;
   background-color: white;
@@ -11700,8 +11705,14 @@ input {
   opacity: 0.7;
  
 }
+.botoes{
+  display: flex;
+  justify-content: space-between !important;
+  align-content: center;
+  justify-content: flex-end;
+
+}
 .botao{
-  padding-top: 1rem;
   display: flex;
   align-content: center;
   justify-content: flex-end;
@@ -11734,4 +11745,51 @@ input {
 body{
   background-repeat: no-repeat;
   height: 100%;
+}
+.preloader-speeding-wheel {
+  width: 49px;
+  height: 49px;
+  margin: 0 auto;
+  border: 3px solid #eaaa21;
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: cssload-spin 575ms infinite linear;
+  -o-animation: cssload-spin 575ms infinite linear;
+  -ms-animation: cssload-spin 575ms infinite linear;
+  -webkit-animation: cssload-spin 575ms infinite linear;
+  -moz-animation: cssload-spin 575ms infinite linear;
+}
+
+@keyframes cssload-spin {
+  100% {
+    transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes cssload-spin {
+  100% {
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-ms-keyframes cssload-spin {
+  100% {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes cssload-spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes cssload-spin {
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }

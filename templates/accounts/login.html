@@ -26,7 +26,7 @@
     </head>
     <body>
         <section>
-            <form class="form-login" method="POST" action="/login">
+            <form class="form-login" method="POST" action="{{ url_for('login') }}">
             <div class="login-div flex-column-centered">
                 <input id="input" class="input" type="checkbox" />
                 
@@ -74,12 +74,12 @@
                         <div class="submit" >
                             <button type="submit" class="button-submit" id="goo" >Entrar</button>
                         </div>
-
+                        <!--
                         <div class="submit" style="padding-bottom: 10px; margin-right: 250px">
-                            <p> Sem conta? <a  style="color: #6495ED " href = "/register"> 
+                            <p> Sem conta? <a  style="color: #6495ED " href="{{ url_for('register') }}"> 
                              Registar-se 
                             </a>
-                        </div>
+                        </div>-->
                     </div>
                    
                     <div class="content log">
@@ -104,11 +104,11 @@
                             <button type="submit" id="start" class="button-submit">Clique para falar</button>
                         </div>
 
-                        <div class="submit" style="padding-bottom: 10px; margin-right: 250px">
-                            <p> Sem conta? <a  style="color: #6495ED " href = "/register"> 
+                        <!--<div class="submit" style="padding-bottom: 10px; margin-right: 250px">
+                            <p> Sem conta? <a  style="color: #6495ED " href="{{ url_for('register') }}"> 
                              Registar-se 
                             </a>
-                        </div>
+                        </div>-->
                     </div>
 
                 </div>

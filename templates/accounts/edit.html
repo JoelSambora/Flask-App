@@ -19,7 +19,7 @@
 
     <html lang = "en">
     <head>
-        <title>Register</title>
+        <title>Edit</title>
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -28,11 +28,10 @@
     
     <body>
         <section>
-
-            <form class="form-sigin" id="cpa-form" name="myForm" method="POST" action="{{ url_for('register') }}">
+            <form class="form-sigin" id="cpa-form" name="myForm" method="POST" action="/update/{{record[0]}}">
 
                 <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-                    <h2 id="heading">Cadastre Sua Conta de Usuário</h2>
+                    <h2 id="heading">Atualize Sua Conta de Usuário</h2>
                     <p>Preencha todos os campos do formulário</p>
                 </div>
                 <div class="formulario col-md-12">
@@ -41,22 +40,24 @@
 
                         <div class="col-md-12">
                             <label>Nome</label>
-                            <input id="nome" class="form-control" name="Nome" id="Nome" type="text" placeholder="Nome completo" required  />
+                            <input id="nome" class="form-control" value="{{record[2]}}" name="Nome" id="Nome" type="text" placeholder="Nome completo" required  />
                         </div>
                         </br>
 
                         <div class="col-md-12">
                             <label for="gander">Selecione o genero</label>
                             <select class="form-control" name="Genero" id="Genero">
-                                <option value="masculino">Masculino</option>
+                                <option value="{{record[3]}}">{{record[3]}}</option>                            
                                 <option value="femenino">Femenino</option>                            
+                                <option value="masculino">Masculino</option>
+
                             </select>
                         </div>
                         </br>
 
                         <div class="col-md-12">
                             <label>Email @</label>
-                            <input id="email" class="form-control" name="Email" type="text" placeholder="anavoice@gmail.com" />
+                            <input id="email" class="form-control" value="{{record[5]}}" name="Email" type="text" placeholder="anavoice@gmail.com" />
 
                         </div>
                         </br>
@@ -70,6 +71,7 @@
                         <div class="col-md-12">
                             <label for="regiao">Selecione a província</label>
                             <select class="form-control" name="Provincia" id="Provincia">
+                                <option value="{{record[13]}}">{{record[13]}}</option>
                                 <option value="Maputo Cidade">Maputo Cidade</option>
                                 <option value="Mapauto Província">Mapauto Província</option>                            
                             </select>
@@ -83,18 +85,18 @@
                         
                         <div class="col-md-12">
                             <label>Avenida</label>
-                            <input id="avenida" class="form-control" name="Avenida" type="text" placeholder="Av. Mapauto" />
+                            <input id="avenida" class="form-control"  value="{{record[14]}}" name="Avenida" type="text" placeholder="Av. Mapauto" />
                         </div>
                         </br>
 
                         <div class="col-md-12">
                             <label>Bairro</label>
-                            <input id="bairro" class="form-control" name="Bairro" type="text" placeholder="Luis Cabral" />
+                            <input id="bairro" class="form-control" value="{{record[15]}}" name="Bairro" type="text" placeholder="Luis Cabral" />
                         </div>
                         </br>
                         <div class="col-md-12">
                             <label>Número da residencia</label>
-                            <input  class='form-control phone' name='CasaNumero' maxlength="5" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" > 
+                            <input  class='form-control phone' name='CasaNumero' value="{{record[16]}}" maxlength="5" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" > 
                         </div>
                         </br>
 
@@ -104,7 +106,7 @@
                                 <div class='input-group-prepend'> 
                                   <span class='input-group-text' id='basic-addon3'>+258</span> 
                                 </div> 
-                                <input  class='form-control phone'  name='phone' maxlength="9" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" > 
+                                <input  class='form-control phone'  name='phone' value="{{record[10]}}" maxlength="9" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" > 
                                 
                             </div> 
                         </div>
@@ -116,21 +118,15 @@
                         </div>
                         </br>
                         <div class="botao">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit"  onclick= "return(validate());"> Registrar </buttom>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"  onclick= "return(validate());"> Atualizar </buttom>
 
                         </div>
-                        <!--<div class="col-md-12 botoes">
-                            <div class="back">
-                                <p> Já possui uma conta? <a  style="color: #6495ED " href="{{ url_for('login') }}"> 
-                                    Entrar 
-                                   </a>
-                            </div>
-                           
-                        </div>-->
+                       
                     </div>  
                     
                 </div>
             </form>
+
         </section>
         <style>
             .form-group{
@@ -139,16 +135,7 @@
             
         </style>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-       <!-- <script>
-            $(document).ready( function() { // Wait until document is fully parsed
-                $("#cpa-form").on('submit', function(e){
-                    validate()
-                   e.preventDefault();
-                   return true
-              
-                });
-              })
-        </script>-->
+      
         <script>
             var regex = /^[A-zÀ-ú ]*$/;
             var email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -7,7 +7,12 @@ import mysql.connector
 import mysql.connector as mysql
 import re
 import urllib.request
-urllib.request.urlopen("http://www.python.org")
+import hashlib
+from datetime import timedelta
+
+
+# with urllib.request.urlopen("http://www.python.org") as response:
+#    html = response.read()
 # create a flask instance
 app = Flask(__name__)
 
@@ -26,6 +31,12 @@ app.config['SECRET_KEY'] = 'Thisissuposedtobesecret!'
 
 bootstrap = Bootstrap(app)
 
+# timeout session
+#@app.before_request
+#def make_session_permanent():
+   # session.permanent = True
+   # app.permanent_session_lifetime = timedelta(minutes=5)
+    
 #index /  pagina inicial
 @app.route('/login/index')
 def index():
@@ -38,24 +49,28 @@ def index():
 
 
 #função about/ sobre nos
-@app.route('/about')
+@app.route('/login/about')
 def about():
-    return render_template("includes/about.html")
+    if 'loggedin' in session:
+        return render_template("includes/index.html")
+    else:
+        return redirect(url_for('login'))
 
 #login
 @app.route('/login', methods=['GET','POST'])
 def login():
     
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor = connection.cursor(buffered=True)
     
     #check if email and password post requests exist (user submitted form)
     if request.method == 'POST' and 'email' in request.form and 'senha' in request.form:
         
         email = request.form['email']
         senha = request.form['senha']
-        
+        h = hashlib.md5(senha.encode()).hexdigest()
+
         #check if account exists using MySQL
-        cursor.execute('SELECT * FROM users WHERE Email = %s AND Senha = %s', (email, senha))
+        cursor.execute('SELECT * FROM users WHERE Email = %s AND Senha = %s', (email, h))
         
         users = cursor.fetchone()
         
@@ -71,13 +86,18 @@ def login():
             
     return render_template("accounts/login.html")
 
-#dashbord page
-@app.route('/login/dashbord')
-def dashbord():
-    
+#dashboard page
+@app.route('/login/dashboard')
+def dashboard():
+    cursor = connection.cursor(buffered=True)
     if 'loggedin' in session:
         
-        return render_template("includes/dashbord.html", user_email=session['email'])
+        cursor.execute('SELECT * FROM users INNER JOIN colaboradores ON users.Id = colaboradores.Users_id')
+        user = cursor.fetchone()
+        if user:
+            session['loggedin'] = True
+            session['Nome'] = user[6]
+        return render_template("includes/dashboard.html", user_email=session['Nome'])
         
     return redirect(url_for('login'))   
     # last = cursor.lastrowid
@@ -91,97 +111,209 @@ def logout():
     
     return redirect(url_for('login'))
 
+#home route
+@app.route('/')
+def home():
+    if 'loggedin' in session:
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM colaboradores INNER JOIN users ON users.Id = colaboradores.Users_id')
+        user = cursor.fetchall()
+        return render_template("includes/users.html", record=user)
+    else:
+        return redirect(url_for('login')) 
+    
 #colaboradores
-@app.route('/users/<nome_user>')
-def user(nome_user):
-    return render_template("users.html",nome_user=nome_user)    
+@app.route('/login/users/')
+def users():
+    
+    if 'loggedin' in session:
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM colaboradores INNER JOIN users ON users.Id = colaboradores.Users_id INNER JOIN telefone ON Colaboradores_ID = colaboradores.id  ORDER BY colaboradores.id')
+        user = cursor.fetchall()
+        return render_template("includes/users.html", record=user)
+    else:
+        return redirect(url_for('login'))  
 
 #create colaborador
-@app.route('/register', methods=['GET','POST'])
-def create():
-    name = None
- 
-    if connection.is_connected():
-        db_Info = connection.get_server_info()
-        print("Connected to MySQL Server version ", db_Info)
-        cursor = connection.cursor()
-        cursor.execute("select database();")
-        record = cursor.fetchone()
-        print("You're connected to database: ", record)
+@app.route('/login/register', methods=['GET','POST'])
+def register():
+    if 'loggedin' in session:
         
-        if request.method == "POST":
+        if request.method == "POST" and 'Nome' in request.form and 'Email' in request.form and 'Avenida' in request.form and 'Bairro' in request.form and 'CasaNumero' in request.form and 'phone' in request.form and 'Senha' in request.form:
             print('passou passou')
 
-            nome = request.form['nome']
-            email = request.form['email']
-            genero = request.form['genero']
-            provinvia = request.form['provincia']
-            avenida = request.form['avenida']
-            bairro= request.form['bairro']
-            nrCasa = request.form['casaNumero']
-            telefone = request.form['telefone'] 
-            senha = request.form['password']
-            confirme_senha = request.form['confirmarsenha']
+            nome = request.form['Nome']
+            email = request.form['Email']
+            genero = request.form['Genero']
+            provincia = request.form['Provincia']
+            avenida = request.form['Avenida']
+            bairro= request.form['Bairro']
+            nrCasa = request.form.get('CasaNumero')
+            telefone = request.form.get('phone') 
+            senha = request.form.get('Senha')
+            h = hashlib.md5(senha.encode()).hexdigest()
+            cursor = connection.cursor(buffered=True)
             
-            cursor.execute('SELECT * FROM Users WHERE email = %s', (email))
+            cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
             account =  cursor.fetchone()
-            
-            print('cheguei')
-            
+                        
             if account:
                 flash('Já existe uma conta', 'danger')
-            elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-                flash('Email invalido', 'danger')
-            elif not re.match(r'/[A-zÁ-ú]*$', nome):
-                flash('Nome invalido', 'danger')
-            elif not re.match(r'/[A-zÁ-ú]*$', avenida):
-                flash('Avenida invalido', 'danger')
-            elif not re.match(r'/[A-zÁ-ú]*$', bairro):
-                flash('Bairro invalido', 'danger')
-            elif not senha is confirme_senha:
-                flash('Senhas não são iguais', 'danger')
+                return redirect(url_for('register'))
+            
             else:
                 
                 #table users        
-                cursor.execute(''' INSERT INTO Users VALUES(%s,%s,%s)''',(email,'',senha))
-                mysql.connection.commit()
+                cursor.execute(''' INSERT INTO users (email, is_Admin, senha) VALUES(%s,%s,%s)''',(email,0,h))
+                connection.commit()
                 cursor.close()
                 
                 #id last user
-                cursor.execute("SELECT * from Users")
+                cursor = connection.cursor(buffered=True)
+                cursor.execute("SELECT * from users")
                 record = cursor.fetchall()
                 last_id = record[-1][0] 
                 
                 # table colaboradores
-                cursor = connection.cursor()
+                cursor = connection.cursor(buffered=True)
                             
-                cursor.execute(''' INSERT INTO Colaboradores VALUES(%s,%s,%s)''',(last_id,nome,genero))
-                mysql.connection.commit()
+                cursor.execute(''' INSERT INTO colaboradores (Users_id, Nome, Genero) VALUES(%s,%s,%s)''',(last_id,nome,genero))
+                connection.commit()
                 cursor.close()
                 
                 # table endereco
-                cursor = connection.cursor()
+                cursor = connection.cursor(buffered=True)
                 
-                cursor.execute(''' INSERT INTO Endereco VALUES(%s,%s,%s,%s,%s)''',(last_id,provinvia,avenida,bairro,nrCasa))
-                mysql.connection.commit()
+                cursor.execute("SELECT * from colaboradores")
+                record = cursor.fetchall()
+                last_id = record[-1][0] 
+                print(last_id)
+                
+                cursor.execute(''' INSERT INTO endereco (Colaboradores_ID, Provincia, Avenida, Bairro, Casa_Numero) VALUES(%s,%s,%s,%s,%s)''',(last_id,provincia,avenida,bairro,nrCasa))
+                connection.commit()
                 cursor.close()
                 
                 # table telefone
-                cursor = connection.cursor()
+                cursor = connection.cursor(buffered=True)
                 
-                cursor.execute(''' INSERT INTO Telefone VALUES(%s,%s)''',(last_id,telefone))
-                mysql.connection.commit()
+                cursor.execute(''' INSERT INTO telefone (Colaboradores_ID, Telefone) VALUES(%s,%s)''',(last_id,telefone))
+                connection.commit()
                 cursor.close()
                 
-                mysql.connection.commit()
-                cursor.close()
                 flash('Usuário criado com sucesso', 'success')
 
-            return redirect(url_for('includes/dashbord.html'))
+                return redirect(url_for('dashboard'))
         elif request.method == 'POST':
             flash('Preencha o formulário!', 'danger')
-            
+    else:  
+        return redirect(url_for('login'))
+               
     return render_template("accounts/register.html")
+#edit colaborador
+@app.route('/edit/<int:id>')
+def edit(id):
+    if 'loggedin' in session:
+        cursor = connection.cursor(buffered=True)
+        cursor.execute('SELECT * FROM colaboradores INNER JOIN users ON users.Id = colaboradores.Users_id INNER JOIN telefone ON Colaboradores_ID = colaboradores.id INNER JOIN endereco ON endereco.Colaboradores_ID = colaboradores.id Where colaboradores.id = %s', (id,))
+
+        #cursor.execute('SELECT * FROM colaboradores Where colaboradores.id = %s', (id,))
+        account =  cursor.fetchone()              
+        print(account)
+
+        if account:
+            return render_template("accounts/edit.html", record=account)
+        else:
+            flash('Não existe nenhum colaborador com esse identificador', 'danger')
+            redirect(url_for('users'))
+            cursor.close()
+ 
+    redirect(url_for('users'))
+
+#update colaborador
+@app.route('/update', methods = ['GET','POST'])
+def update(id):
+    if 'loggedin' in session:
+        cursor = connection.cursor(buffered=True)
+
+        cursor.execute('SELECT * FROM colaboradores Where colaboradores.id = %s', (id,))
+
+        account =  cursor.fetchone()              
+        if account:
+            
+            if request.method == "POST" and 'Nome' in request.form and 'Email' in request.form and 'Avenida' in request.form and 'Bairro' in request.form and 'CasaNumero' in request.form and 'phone' in request.form and 'Senha' in request.form:
+                print('passou passou')
+
+                nome = request.form['Nome']
+                email = request.form['Email']
+                genero = request.form['Genero']
+                provincia = request.form['Provincia']
+                avenida = request.form['Avenida']
+                bairro= request.form['Bairro']
+                nrCasa = request.form.get('CasaNumero')
+                telefone = request.form.get('phone') 
+                senha = request.form.get('Senha')
+                h = hashlib.md5(senha.encode()).hexdigest()
+                cursor = connection.cursor(buffered=True)
+                
+                cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
+                account =  cursor.fetchone()
+                            
+                if account:
+                    
+                    #table users        
+                    cursor.execute(''' UPDATE users SET email=%s, is_Admin=%s, senha=%s WHERE id =%s''',(email,0,h,account[0]))
+                    connection.commit()
+                    cursor.close()
+                    
+                    print('passou')
+                    #id last user
+                    cursor = connection.cursor(buffered=True)
+                    cursor.execute("SELECT * from users")
+                    record = cursor.fetchall()
+                    last_id = record[-1][0] 
+                    
+                    # table colaboradores
+                    cursor = connection.cursor(buffered=True)
+                                
+                    cursor.execute(''' UPDATE colaboradores SET Nome=%s, Genero=%s ''',(nome,genero))
+                    connection.commit()
+                    cursor.close()
+                    
+                    # table endereco
+                    cursor = connection.cursor(buffered=True)
+                    
+                    cursor.execute("SELECT * from colaboradores")
+                    record = cursor.fetchall()
+                    last_id = record[-1][0] 
+                    print(last_id)
+                    
+                    cursor.execute(''' UPDATE endereco SET Provincia=%s, Avenida=%s, Bairro=%s, Casa_Numero=%s ''',(provincia,avenida,bairro,nrCasa))
+                    connection.commit()
+                    cursor.close()
+                    
+                    # table telefone
+                    cursor = connection.cursor(buffered=True)
+                    
+                    cursor.execute(''' UPDATE telefone SET Telefone=%s''',(telefone))
+                    connection.commit()
+                    cursor.close()
+                    
+                    flash('Colaborador atualizado com sucesso', 'success')
+
+                    return redirect(url_for('dashboard'))
+            elif request.method == 'POST':
+                flash('Preencha o formulário!', 'danger')
+        
+        else:
+            flash('Não existe uma conta com esse identificador', 'danger')
+            return redirect(url_for('users'))
+    cursor = connection.cursor(buffered=True)
+    print('passou')
+    cursor.execute('SELECT * FROM colaboradores Where colaboradores.id = %s', (id,))
+    account =  cursor.fetchone()              
+
+    print(account)
+    return redirect(url_for('login'))
 
 # função que retorna erro para página que não existe
 @app.route('/<string:nome>')
