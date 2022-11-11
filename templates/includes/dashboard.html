@@ -1,6 +1,22 @@
 {% extends 'layouts/base.html' %}
 
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+            <span>{{ message }}</section>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <span aria-hidden = "true"></span>
+        </div>
+   
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
 <html lang = "en">
   <head>
       <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
@@ -96,7 +112,6 @@
           </a>
         </li>
   
-        
       </ul>
     </nav>
   
@@ -105,13 +120,11 @@
       <p>{{ user_email }}</p>
     </main>
   </body>
-
-     
+  
 <style>
   body{
     background-color: #f3f4f7;
   }
 </style>
-
 
 {% endblock %}

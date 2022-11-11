@@ -236,64 +236,52 @@ def update(id):
 
         cursor.execute('SELECT * FROM colaboradores Where colaboradores.id = %s', (id,))
 
-        account =  cursor.fetchone()              
+        account =  cursor.fetchone()
+        print(account)        
         if account:
             
             if request.method == "POST" and 'Nome' in request.form and 'Email' in request.form and 'Avenida' in request.form and 'Bairro' in request.form and 'CasaNumero' in request.form and 'phone' in request.form and 'Senha' in request.form:
-                print('passou passou')
 
-                nome = request.form['Nome']
+                nome = request.form.get('Nome')
+                print(nome)
                 email = request.form['Email']
                 genero = request.form['Genero']
                 provincia = request.form['Provincia']
                 avenida = request.form['Avenida']
+                print(avenida)
                 bairro= request.form['Bairro']
+                print(bairro)
                 nrCasa = request.form.get('CasaNumero')
                 telefone = request.form.get('phone') 
                 senha = request.form.get('Senha')
-                h = hashlib.md5(senha.encode()).hexdigest()
-                cursor = connection.cursor(buffered=True)
-                
-                cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
-                account =  cursor.fetchone()
-                            
+                h = hashlib.md5(senha.encode()).hexdigest()               
                 if account:
                     
                     #table users        
-                    cursor.execute(''' UPDATE users SET email=%s, is_Admin=%s, senha=%s WHERE id =%s''',(email,0,h,account[0]))
+                    cursor.execute(" UPDATE users SET email=%s, is_Admin=%s, senha=%s WHERE id =%s;",(email,0,h,account[1],))
                     connection.commit()
                     cursor.close()
-                    
-                    print('passou')
-                    #id last user
-                    cursor = connection.cursor(buffered=True)
-                    cursor.execute("SELECT * from users")
-                    record = cursor.fetchall()
-                    last_id = record[-1][0] 
                     
                     # table colaboradores
                     cursor = connection.cursor(buffered=True)
                                 
-                    cursor.execute(''' UPDATE colaboradores SET Nome=%s, Genero=%s ''',(nome,genero))
+                    cursor.execute(" UPDATE colaboradores SET Nome=%s, Genero=%s WHERE id=%s; ",(nome, genero, id,))
+                    print(nome)
+
                     connection.commit()
                     cursor.close()
                     
                     # table endereco
                     cursor = connection.cursor(buffered=True)
-                    
-                    cursor.execute("SELECT * from colaboradores")
-                    record = cursor.fetchall()
-                    last_id = record[-1][0] 
-                    print(last_id)
-                    
-                    cursor.execute(''' UPDATE endereco SET Provincia=%s, Avenida=%s, Bairro=%s, Casa_Numero=%s ''',(provincia,avenida,bairro,nrCasa))
+                                       
+                    cursor.execute(" UPDATE endereco SET Provincia=%s, Avenida=%s, Bairro=%s, Casa_Numero=%s WHERE Colaboradores_ID = %s; ",( provincia, avenida, bairro, nrCasa, id,))
                     connection.commit()
                     cursor.close()
                     
                     # table telefone
                     cursor = connection.cursor(buffered=True)
                     
-                    cursor.execute(''' UPDATE telefone SET Telefone=%s''',(telefone))
+                    cursor.execute(" UPDATE telefone SET Telefone = %s WHERE Colaboradores_ID = %s;",(telefone, id,))
                     connection.commit()
                     cursor.close()
                     
