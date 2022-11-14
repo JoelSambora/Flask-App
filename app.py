@@ -294,33 +294,48 @@ def update(id):
         else:
             flash('Não existe uma conta com esse identificador', 'danger')
             return redirect(url_for('users'))
-    cursor = connection.cursor(buffered=True)
-    print('passou')
-    cursor.execute('SELECT * FROM colaboradores Where colaboradores.id = %s', (id,))
-    account =  cursor.fetchone()              
 
-    print(account)
     return redirect(url_for('login'))
 
 #delete colaborador
 @app.route('/delete/<int:id>')
 def delete(id):
     if 'loggedin' in session:
-        
         cursor = connection.cursor(buffered=True)
         cursor.execute('SELECT * FROM colaboradores Where colaboradores.id = %s', (id,))
         account =  cursor.fetchone()
         
+        user_id = None
+        
         if account:
+            #DELETE FROM COLABORADORES WHERE ID = ?
+            cursor.execute('SELECT Users_id FROM colaboradores WHERE Id = %s', (id,))
+            x = cursor.fetchone()
+            print(user_id)
+            user_id = x[0]
+            print(x)
+           
+            cursor.execute('DELETE FROM telefone WHERE Colaboradores_ID = %s',(id,))            
+            connection.commit()
             
-            cursor.execute('DELETE * FROM colaboradores INNER JOIN users ON users.Id = colaboradores.Users_id INNER JOIN telefone ON Colaboradores_ID = colaboradores.id INNER JOIN endereco ON endereco.Colaboradores_ID = colaboradores.id Where colaboradores.id = %s', (id,))
+            cursor.execute('DELETE FROM endereco WHERE Colaboradores_ID = %s',(id,))            
+            connection.commit()
+            
+            cursor.execute('DELETE FROM colaboradores WHERE id = %s',(id,))            
+            connection.commit()
+            
+            cursor.execute('DELETE FROM users WHERE Id = %s',(user_id,))            
+            connection.commit()
+
+            cursor.close()
+            
+            flash('Conta apagada com sucesso', 'success')
+            return redirect(url_for('users'))
         else:
             flash('Não existe uma conta com esse identificador', 'danger')
             return redirect(url_for('users'))
-        
-    else:
-        flash('Não esta logado', 'danger')
-        return redirect(url_for('users')) 
+    
+    return redirect(url_for('login'))
 
 # função que retorna erro para página que não existe
 @app.route('/<string:nome>')
