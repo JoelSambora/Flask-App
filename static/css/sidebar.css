@@ -24,7 +24,7 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-  background: #6649b8;
+  background: #008080;
 }
 
 main {
@@ -38,6 +38,7 @@ main {
   background-color: var(--bg-primary);
   transition: width 600ms ease;
   overflow: scroll;
+  overflow: hidden;
 }
 
 .dnavbar-nav {

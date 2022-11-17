@@ -11649,11 +11649,32 @@ p.supported {
   display: none;
 }
 #start{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 3rem;
+  width: 8rem;
   margin: auto;
 }
 #start:hover{
   color: #ffff;
   background-color: #214C92;
+}
+#stop{
+  background-color: #FF0000;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 3rem;
+  width: 8rem;
+  margin: auto;
+}
+#stop:hover{
+  color: #ffff;
+ 
+}
+.container{
+  margin-left: 9rem !important;
 }
 
 #goo:hover{

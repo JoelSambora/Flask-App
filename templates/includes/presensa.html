@@ -1,0 +1,73 @@
+
+{% extends 'layouts/dash.html' %}
+{% block content %}
+
+
+    <html lang="en">
+    <head>
+        <title>Lista de Colaboradores</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
+        
+        <link rel="stylesheet" href=" https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">  
+        <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> 
+        
+    </head>
+    <body>
+      <div class="container"> 
+        
+        <div class="tabel" style= "width:80%; margin: 0 auto;">
+            <div class="picture1" style="display: flex; justify-content: center; height: 158px">
+                <image src="{{url_for('static',filename = 'img/minimus.png')}}" >
+            </div>
+    
+            <table id="example" class="cell-border table table-striped">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-8"><h2>Lista <b>Presensa</b></h2></div>
+                        <div class='btn btn-info' id="displaymessage" style="display:none;width:100%;margin-top:10px;"></div>
+                    </div>
+                </div>
+              <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Data e Hora</th>
+                    <th>Evento</th>>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for row in record %}    
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    {% if row[3] == 1 %}
+                        <td>Entrada</td>
+                    {% else %}
+                        <td>Saida</td>
+                    {% endif %}
+                </tr>   
+                {% endfor %} 
+                  
+          </table>
+        </div>
+      </div>
+      
+
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>  
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> 
+    <script>
+      $(document).ready(function () {
+        $('#example').DataTable();
+    });
+    </script>
+    </body>
+    
+    </html>
+
+{% endblock %}

@@ -7,7 +7,7 @@ try:
                                 user='root',
                                 password='')
     
-    cursor = connection.cursor()
+    cursor = connection.cursor(buffered=True)
     
     mySql_Create_Table_Query = """CREATE TABLE Users ( 
                             Id int AUTO_INCREMENT PRIMARY KEY,
@@ -16,7 +16,7 @@ try:
                             Senha VARCHAR2(80) NOT NULL,
                             ) """
     
-    cursor = connection.cursor()
+    cursor = connection.cursor(buffered=True)
     result = cursor.execute(mySql_Create_Table_Query)
     print("Users Table created successfully ")                        
 
@@ -28,7 +28,7 @@ try:
                             FOREIGN KEY(Users_id) REFERENCES Users(Id)
                             )"""
     
-    cursor = connection.cursor()
+    cursor = connection.cursor(buffered=True)
     result = cursor.execute(mySql_Create_Table_Query)
     print("Colaboradores Table created successfully ")
     
@@ -42,7 +42,7 @@ try:
                             FOREIGN KEY(Colaboradores_ID) REFERENCES Colaboradores(Id)
                             )""" 
     
-    cursor = connection.cursor()
+    cursor = connection.cursor(buffered=True)
     result = cursor.execute(mySql_Create_Table_Query)
     print("Endereco Table created successfully ")
                             
@@ -53,11 +53,22 @@ try:
                             FOREIGN KEY(Colaboradores_ID) REFERENCES Colaboradores(Id)
                             )"""
                                                    
-    cursor = connection.cursor()
+    cursor = connection.cursor(buffered=True)
     result = cursor.execute(mySql_Create_Table_Query)
     print("telefone Table created successfully ")
-    
-    cursor = connection.cursor()
+        
+    mySql_Create_Table_Query = """CREATE TABLE date_time ( 
+                            Id int AUTO_INCREMENT PRIMARY KEY,
+                            data_hora datetime NOT NULL,
+                            tipo int(11) NOT NULL, 
+                            FOREIGN KEY(Colaboradores_ID) REFERENCES Colaboradores(Id)
+                            ) """
+    print("date_time Table created successfully ")
+
+    cursor = connection.cursor(buffered=True)
+    result = cursor.execute(mySql_Create_Table_Query)
+    print("Users Table created successfully ")
+    cursor = connection.cursor(buffered=True)
     cursor.execute("select database();")
     record = cursor.fetchone()
     print("You're connected to database: ", record)
