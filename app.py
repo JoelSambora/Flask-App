@@ -2,7 +2,6 @@ import os
 from flask_mysqldb import MySQL
 from flask import Flask, render_template, flash, request, redirect, url_for, session
 from flask_bootstrap import Bootstrap
-import mysql.connector
 import mysql.connector as mysql
 from flask_wtf.csrf import CSRFProtect
 import hashlib
@@ -113,9 +112,9 @@ def findIDcolaborador(id):
 
 
 #dashboard page
-@app.route('/login/dashboard')
+@app.route('/login/homedashboard')
 
-def dashboard():
+def homedashboard():
     cursor = connection.cursor(buffered=True)
     if 'loggedin' in session:
         
@@ -129,7 +128,7 @@ def dashboard():
             is_Admin = session['is_Admin']
             
             if is_Admin != 0:
-                return render_template("includes/dashboard.html", user_email=session['Nome'])
+                return render_template("includes/homedashboard.html", user_email=session['Nome'])
             else:
                 return render_template("includes/index.html")
     flash('precisa fazer login para aceder a página','info')  

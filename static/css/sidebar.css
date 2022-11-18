@@ -76,6 +76,8 @@ main {
   border-radius: 5px;
 }
 
+
+
 .link-text {
   display: none;
   margin-left: 1rem;
@@ -163,7 +165,7 @@ main {
   }
 
   .dnavbar:hover {
-    width: 16rem;
+    width: 14rem;
   }
 
   .dnavbar:hover .link-text {
