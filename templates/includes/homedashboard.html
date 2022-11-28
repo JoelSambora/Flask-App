@@ -1,0 +1,308 @@
+{% extends 'layouts/dash.html' %}
+{% block content %}
+
+<html lang="en">
+    <head>
+        <title>Dashboard</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+        <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+        <link href="https://demo.dashboardpack.com/architectui-html-free/main.css" rel="stylesheet">
+
+    </head>
+    <div id="mainDiv" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header" style="width: 80%; margin-left: 15rem; margin-right: 7rem !important; box-shadow: 0 0 10px; border-radius: 4px">
+              <div class="app-main">
+
+                <div class="app-main__outer">
+                    <div class="app-main__inner">
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+                                <div class="page-title-heading">
+                                    <div class="page-title-icon">
+                                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                                    </div>
+                                    <div>Painel de Analítica
+                                        <div class="page-title-subheading">
+                                            O Painel de análise de dados exibe vários gráficos para visualização de informações estatísticas
+                                        </div>
+                                    </div>
+                                </div>
+                                    </div>
+                        </div>            <div class="row">
+
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-midnight-bloom">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Colaboradores</div>
+                                            <div class="widget-subheading">Total de colaboradores na plataforma</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white"><span>{{ info[0] }}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-arielle-smile">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Maputo Província</div>
+                                            <div class="widget-subheading">Total de colaboradores de Maputo Província</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white"><span>{{ info[2] }} </span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-grow-early">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Maputo Cidade</div>
+                                            <div class="widget-subheading">Total de colaboradores de Maputo Cidade</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white"><span>{{ info[1] }}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="mb-3 card">
+                                    <div class="card-header-tab card-header-tab-animation card-header">
+                                        <div class="card-header-title">
+                                            <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                                            Área de abragencia
+                                        </div>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="tabs-eg-77">
+                                                <div class="card mb-3 widget-chart widget-chart2 text-left w-100">
+                                                    <div class="widget-chat-wrapper-outer">
+                                                        <div class="widget-chart-wrapper widget-chart-wrapper-lg opacity-10 m-0">
+                                                            <canvas id="myChart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-lg-6">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="container">
+                                              <div class="display-date">
+                                                <span id="day">day</span>,
+                                                <span id="daynum">00</span>
+                                                <span id="month">month</span>
+                                                <span id="year">0000</span>
+                                              </div>
+                                              <div class="display-time"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">Colaboradores</div>
+                                                <div class="widget-subheading">Genero Masculino</div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-success">{{ info[3] }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">Colaboradores</div>
+                                                <div class="widget-subheading">Genero Femenino</div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-warning"> {{ info[4] }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-xl-none d-lg-block col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">Income</div>
+                                                <div class="widget-subheading">Expected totals</div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-focus"> 147</div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-progress-wrapper">
+                                            <div class="progress-bar-sm progress-bar-animated-alt progress">
+                                                <div class="progress-bar bg-info" role="progressbar" aria-valuenow="54" aria-valuemin="0" aria-valuemax="100" style="width: 54%;"></div>
+                                            </div>
+                                            <div class="progress-sub-label">
+                                                <div class="sub-label-left">Expenses</div>
+                                                <div class="sub-label-right">100%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+              </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://demo.dashboardpack.com/architectui-html-free/assets/scripts/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+    <script>
+        const displayTime = document.querySelector(".display-time");
+        // Time
+        function showTime() {
+          let time = new Date();
+          displayTime.innerText = time.toLocaleTimeString("en-US", { hour12: false });
+          setTimeout(showTime, 1000);
+        }
+
+        showTime();
+
+        // Date
+        function updateDate() {
+          let today = new Date();
+
+          // return number
+          let dayName = today.getDay(),
+            dayNum = today.getDate(),
+            month = today.getMonth(),
+            year = today.getFullYear();
+
+          const months = [
+            "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"
+          ];
+          const dayWeek = [
+            "Domingo",
+            "Segunda",
+            "Terça",
+            "Quarta-Feira",
+            "Quinta-Feira",
+            "Sexta-Feira",
+            "Sabado",
+          ];
+          // value -> ID of the html element
+          const IDCollection = ["day", "daynum", "month", "year"];
+          // return value array with number as a index
+          const val = [dayWeek[dayName], dayNum, months[month], year];
+          for (let i = 0; i < IDCollection.length; i++) {
+            document.getElementById(IDCollection[i]).firstChild.nodeValue = val[i];
+          }
+        }
+
+        updateDate();
+    </script>
+    <script>
+        var xValues = ["Maputo Província", "Maputo Cidade"];
+        var yValues = [{{info[3] }}, {{info[2]}}];
+        var barColors = ["#82CD47", "#54B435"];
+        new Chart("myChart", {
+    type: "pie",
+    data: {
+        labels: xValues,
+        datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+        }]
+    },
+    options: {
+        title: {
+        display: true,
+        text: "Zona Sul"
+        }
+    }
+    });
+    </script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+        .display-date {
+          text-align: center;
+          margin-bottom: 10px;
+          font-size: 1.6rem;
+          font-weight: 10;
+            margin-right: 150px;
+        }
+
+        .display-time {
+          display: flex;
+            margin-right: 150px;
+          font-size: 2rem;
+          font-weight: bold;
+          border: 2px solid #ffd868;
+          padding: 10px 20px;
+          border-radius: 5px;
+          transition: ease-in-out 0.1s;
+          transition-property: background, box-shadow, color;
+          -webkit-box-reflect: below 2px
+          linear-gradient(transparent, rgba(255, 255, 255, 0.05));
+        }
+
+        .display-time:hover {
+          background: #ffd868;
+          box-shadow: 0 0 30px#ffd868;
+          color: #272727;
+          cursor: pointer;
+        }
+
+    </style>
+    <style>
+        .app-main__outer{
+            padding: 0 2rem !important;
+        }
+        @media only screen and (max-width: 600px) {
+            .app-main__outer{
+                padding: 0% !important;
+                padding-left: 280px !important;
+            }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+</html>
+{% endblock %}

@@ -7,7 +7,7 @@
   {% if messages %}
     {% for category, message in messages %}
         <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
-            <span>{{ message }}</section>
+            <span>{{ message }} </span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <span aria-hidden = "true"></span>
         </div>
@@ -74,16 +74,12 @@
                         <div class="submit" >
                             <button type="submit" class="button-submit" id="goo" >Entrar</button>
                         </div>
-                        <!--
-                        <div class="submit" style="padding-bottom: 10px; margin-right: 250px">
-                            <p> Sem conta? <a  style="color: #6495ED " href="{{ url_for('register') }}"> 
-                             Registar-se 
-                            </a>
-                        </div>-->
+
                     </div>
                    
                     <div class="content log">
                         <h2 class="title" style="padding-top: ">Entrar com voz</h2>
+                        <p>Pressione gravar e depois de terminar pressione parar.</p>
                         <div class="fields">
                             <label class="field">
                                 <div class="icon">
@@ -96,15 +92,14 @@
                                 </div>
                                 <input type="text" id="search" name="search" placeholder="...">
                             </label>
-                            
-   
+
                         </div>
                     
-                        <div class="submit" style="display:flex">
-                            <button type="submit" id="start" class="button-submit">
+                        <div class="button" style="display:flex; width: 96%; justify-content: space-between;">
+                            <button id="start" onclick="startRecording(this);" class="button-submit" style="border-radius: 40px">
                                 <svg style = "height:2rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
-                                falar</button>
-                            <button type="submit" id="stop" class="button-submit">
+                                Gravar</button>
+                            <button  id="stop" onclick="stopRecording(this);" class="button-submit" style="border-radius: 40px">
                                 <svg style = "height:2rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM224 192V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V192c0-17.7 14.3-32 32-32s32 14.3 32 32zm128 0V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V192c0-17.7 14.3-32 32-32s32 14.3 32 32z"/></svg>
                                 Parar</button>
                         </div>
@@ -112,18 +107,17 @@
                             <button type="submit" id="start" class="button-submit">Entrar</button>
                         </div>
 
-                        <!--<div class="submit" style="padding-bottom: 10px; margin-right: 250px">
-                            <p> Sem conta? <a  style="color: #6495ED " href="{{ url_for('register') }}"> 
-                             Registar-se 
-                            </a>
-                        </div>-->
                     </div>
 
                 </div>
             </div>
         </form>
         </section>
+
         <script src="/static/js/scripts.js"></script>
+        <script src="/static/js/utils.js"></script>
+        <script src="/static/js/upload.js"></script>
+        <script src="/static/js/recorder.js"></script>
     </body>
     </html>
 
